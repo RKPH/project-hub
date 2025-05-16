@@ -1,0 +1,308 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.Toastify__toast-theme--colored.Toastify__toast--success  {
+    background-color: green !important;
+    color: white !important;
+}
+
+:root {
+    --toastify-color-light: #fff;
+    --toastify-color-dark: #121212;
+    --toastify-color-info: #3498db;
+    --toastify-color-success: #07bc0c;
+    --toastify-color-warning: #f1c40f;
+    --toastify-color-error: #e74c3c;
+    --toastify-color-transparent: rgba(255, 255, 255, 0.7);
+
+    --toastify-icon-color-info: var(--toastify-color-info);
+    --toastify-icon-color-success: var(--toastify-color-success);
+    --toastify-icon-color-warning: var(--toastify-color-warning);
+    --toastify-icon-color-error: var(--toastify-color-error);
+
+    --toastify-toast-width: 320px;
+    --toastify-toast-background: #fff;
+    --toastify-toast-min-height: 64px;
+    --toastify-toast-max-height: 800px;
+    --toastify-font-family: sans-serif;
+    --toastify-z-index: 9999;
+
+    --toastify-text-color-light: #757575;
+    --toastify-text-color-dark: #fff;
+
+
+    --toastify-text-color-info: #fff;
+    --toastify-text-color-success: #fff;
+    --toastify-text-color-warning: #fff;
+    --toastify-text-color-error: #fff;
+
+    --toastify-spinner-color: #616161;
+    --toastify-spinner-color-empty-area: #e0e0e0;
+}
+
+.toast-success {
+    color: var(--toastify-text-color-success);
+    background-color: var(--toastify-color-success);
+}
+
+/* Target horizontal scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    height: 2px; /* Adjust height for horizontal scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* Transparent track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: black; /* Black scrollbar color */
+    border-radius: 10px; /* Rounded corners */
+    transition: transform 0.2s ease-in-out; /* Smooth scaling transition */
+}
+
+/* Scale effect on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+
+    background-color: #555;
+    cursor: pointer;
+}
+.custom-scrollbar2::-webkit-scrollbar {
+    height: 2px; /* Adjust height for horizontal scrollbar */
+    width: 5px;
+}
+
+.custom-scrollbar2::-webkit-scrollbar-track {
+    background: transparent; /* Transparent track */
+}
+
+.custom-scrollbar2::-webkit-scrollbar-thumb {
+    background-color: black; /* Black scrollbar color */
+    border-radius: 10px; /* Rounded corners */
+    transition: transform 0.2s ease-in-out; /* Smooth scaling transition */
+}
+
+/* Scale effect on hover */
+.custom-scrollbar2::-webkit-scrollbar-thumb:hover {
+
+    background-color: #555;
+    cursor: pointer;
+}
+
+
+.custom-scrollbar-hidden {
+    scrollbar-width: none;
+}
+
+.custom-scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-inner {
+    transition: transform 0.5s ease-in-out; /* Apply smooth transition */
+}
+
+@keyframes typing {
+    0% { opacity: 0.3; transform: translateY(0px); }
+    50% { opacity: 1; transform: translateY(-3px); }
+    100% { opacity: 0.3; transform: translateY(0px); }
+}
+
+.dot-animation {
+    font-size: 20px;
+    animation: typing 1s infinite alternate;
+}
+
+.dot-animation:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dot-animation:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot-animation:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Container for the product card */
+.product-card {
+    width: 100%;
+    max-width: 250px; /* Reduce the max width to make the cards smaller */
+    background-color: white;
+    border: 1px solid #e0e0e0; /* Light gray border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    overflow: hidden; /* Ensures content stays within rounded corners */
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 20px; /* Adds space between each card */
+}
+
+/* Hover effect for the card */
+.product-card:hover {
+    transform: translateY(-5px); /* Subtle hover lift effect */
+}
+
+/* Content padding inside the card */
+.product-card-content {
+    padding: 16px; /* Reduced padding to make the card smaller */
+}
+
+/* Product name */
+.product-name {
+    font-size: 1.125rem; /* Slightly smaller font size */
+    font-weight: 600;
+    color: #333; /* Dark text color */
+    margin-bottom: 12px;
+}
+
+/* Product price styling */
+.product-price {
+    font-size: 1rem; /* Slightly smaller font size */
+    color: #666; /* Slightly lighter text for the price */
+    margin-bottom: 16px;
+}
+
+/* Price value styling */
+.price-value {
+    color: #007bff; /* Blue color for price */
+    font-weight: 600;
+}
+
+/* Button styling */
+.view-product-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px 14px; /* Adjusted padding for the button */
+    background-color: #007bff; /* Blue background */
+    color: white;
+    font-size: 0.875rem; /* Smaller font size */
+    font-weight: 500;
+    border-radius: 5px;
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Hover effect for the button */
+.view-product-btn:hover {
+    background-color: #0056b3; /* Darker blue when hovered */
+    transform: scale(1.05); /* Slight scale effect on hover */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .product-card {
+        max-width: 100%; /* Full width for smaller devices */
+    }
+}
+
+
+
+/* index.css */
+
+/* Default styles */
+.MuiPaginationItem-text {
+    font-size: 0.65rem !important;
+    line-height: 2rem !important;
+}
+
+.MuiPaginationItem-icon {
+    font-size: 0.75rem !important;
+    line-height: 2rem !important;
+}
+
+/* For min width 768px */
+@media (min-width: 768px) {
+    .MuiPaginationItem-text {
+        font-size: 1.125rem !important;
+        line-height: 1.75rem !important;
+    }
+
+    .MuiPaginationItem-icon {
+        font-size: 1.5rem !important;
+        line-height: 2rem !important;
+    }
+}
+
+.css-1pi9rcw-MuiButtonBase-root-MuiPaginationItem-root {
+    border: 1px solid black !important;
+
+}
+
+.dark .css-1pi9rcw-MuiButtonBase-root-MuiPaginationItem-root {
+    border: 1px solid #fff !important;
+    /* white border for dark mode */
+}
+
+/* Light mode styles */
+.css-1pi9rcw-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+    color: #fff !important;
+    background-color: #d30e0e !important;
+    /* orange for selected item */
+}
+
+.pagination-icon-bg {
+    background-color: #de141c !important;
+    /* blue for icons */
+    color: #fff !important;
+}
+
+/* Dark mode styles */
+
+
+.dark .pagination-icon-bg {
+    background-color: #1976d2 !important;
+    /* orange for icons */
+    color: #fff !important;
+}
+
+.css-41sz0k {
+    border: 1px solid black !important;
+}
+
+.dark .css-41sz0k {
+    border: 1px solid #fff !important;
+    /* white border for dark mode */
+}
+
+.css-41sz0k.Mui-selected {
+    color: #fff !important;
+    background-color: #de141c !important;
+}
+
+/* Other custom styles */
+.slick-prev:before,
+.slick-next:before {
+    font-size: 30px;
+    color: black;
+}
+
+
+/* Target the selected pagination item (in both light and dark modes) */
+.MuiPaginationItem-root.Mui-selected {
+    background-color: #de141c !important;  /* Red background */
+    color: #fff !important;                 /* White text */
+    border-color: #de141c !important;       /* Optional: red border to match */
+}
+
+/* Optional: Add hover effect if desired */
+.MuiPaginationItem-root.Mui-selected:hover {
+    background-color: #bb0c0c !important;
+}
+
+/* Ensure dark mode also works (optional, if you have a dark mode class on body or root element) */
+.dark .MuiPaginationItem-root.Mui-selected {
+    background-color: #de141c !important;
+    color: #fff !important;
+    border-color: #de141c !important;
+}
+.custom-checkbox {
+    accent-color: #de141c; /* Red checkmark */
+}
+
+
+#cb3 {
+    accent-color: #d30e0e;
+}

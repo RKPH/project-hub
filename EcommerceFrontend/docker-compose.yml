@@ -1,0 +1,21 @@
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    env_file:
+      - .env
+    environment:
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: always
+    networks:
+      - shared-network
+networks:
+  shared-network:
+    external: true

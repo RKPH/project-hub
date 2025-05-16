@@ -1,0 +1,136 @@
+#!/usr/bin/env node
+
+var app = require('../app');
+var debug = require('debug')('learning:server');
+var http = require('http'); // Use HTTPS instead of HTTP
+
+/**
+ * Get port from environment and store in Express.
+ */
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+var server = http.createServer(app);
+
+/**
+ * Start Socket.IO server with consistent CORS configuration
+ */
+var { Server } = require('socket.io');
+var io = new Server(server, {
+    cors: {
+        origin: ['https://d2f.io.vn', 'https://dashboard.d2f.io.vn', 'http://localhost:5173', 'http://localhost:5174'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        credentials: true,
+        allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
+    },
+    transports: ['websocket', 'polling'],
+    allowEIO3: true,
+    pingTimeout: 60000,
+    pingInterval: 25000,
+    cookie: false
+});
+
+app.locals.io = io;
+
+// Import your User model (adjust the path based on your project structure)
+const User = require('../models/user'); // Replace with the actual path to your User model
+
+/**
+ * Socket.IO connection handler
+ */
+io.on('connection', (socket) => {
+  console.log('A user connected:', socket.id);
+
+  // Handle the 'join' event to add the socket to a room
+  socket.on('join', async (userId) => {
+    try {
+      console.log(`User ${userId} joined room`);
+      socket.join(userId);
+      console.log(`Socket ${socket.id} rooms:`, socket.rooms); // Debug rooms
+
+      // Check if the user is an admin
+      const user = await User.findById(userId);
+      if (user && user.role === 'admin') { // Assuming your User model has a 'role' field
+        socket.join('admin');
+        console.log(`Admin ${userId} joined the admin room`);
+      }
+    } catch (error) {
+      console.error(`Error joining room for user ${userId}:`, error.message);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+
+  // Example custom event
+  socket.on('custom_event', (data) => {
+    console.log('Received custom_event:', data);
+    socket.emit('custom_response', { message: 'Hello from server!' });
+  });
+
+  // Debug all events received by the server
+  socket.onAny((event, ...args) => {
+    console.log(`Received event: ${event}`, args);
+  });
+});
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    return val;
+  }
+
+  if (port >= 0) {
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
