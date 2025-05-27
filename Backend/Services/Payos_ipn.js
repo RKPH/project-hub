@@ -66,11 +66,12 @@ exports.handlePayOSConfirmWebhook = async (req, res) => {
         }
 
         // Extract original orderId from orderCode (assuming orderCode is the full MongoDB _id)
-        const numericOrderId = Number(paymentData.orderCode); // e.g., 5, 10
-        const originalOrderId = numericOrderId.toString().padStart(4, '0');
-        console.log(`Extracted originalOrderId: ${originalOrderId}`);
+        const fullOrderCode = paymentData.orderCode.toString();
+        const orderId = fullOrderCode.substring(0, 10).replace(/^0+/, ''); // Remove leading zeros
+        console.log("✅ Extracted orderId:", orderId);
+        console.log(`Extracted originalOrderId: ${orderId}`);
 
-        const order = await Order.findOne({order_id: originalOrderId}).populate('products.product').exec();
+        const order = await Order.findOne({order_id: orderId}).populate('products.product').exec();
         if (!order) {
             console.log(`Order not found for originalOrderId: ${originalOrderId}`);
 
