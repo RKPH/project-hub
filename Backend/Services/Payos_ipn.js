@@ -31,7 +31,7 @@ function convertObjToQueryStr(object) {
 
 exports.handlePayOSConfirmWebhook = async (req, res) => {
     try {
-        const PAYOS_CHECKSUM_KEY = '21cf69f90ea459a7c2fee82d41402465223fdb990c7c26764436f2f28c66658d'; // Updated to match your latest example
+        const PAYOS_CHECKSUM_KEY = process.env.PAYOS_CHECKSUM_KEY; // Updated to match your latest example
         const webhookData = req.body;
 
         console.log("🔔 Received Confirm Webhook from PayOS:", JSON.stringify(webhookData, null, 2));
