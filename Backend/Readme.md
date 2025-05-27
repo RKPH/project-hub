@@ -112,6 +112,10 @@ QDRANT_API_URL=Your Qdrant API URL (e.g., https://qdrant.d2f.io.vn/collections/t
 
 # SendGrid Configuration
 SENDGRID_API_KEY=Your SendGrid API key
+
+PAYOS_API_KEY=
+PAYOS_CLIENT_ID=
+PAYOS_CHECKSUM_KEY=
 ```
 
 ### Build and Run with Docker
