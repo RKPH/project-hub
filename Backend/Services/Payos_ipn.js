@@ -73,7 +73,7 @@ exports.handlePayOSConfirmWebhook = async (req, res) => {
 
         const order = await Order.findOne({order_id: orderId}).populate('products.product').exec();
         if (!order) {
-            console.log(`Order not found for originalOrderId: ${originalOrderId}`);
+            console.log(`Order not found for originalOrderId: ${orderId}`);
 
         }
 
