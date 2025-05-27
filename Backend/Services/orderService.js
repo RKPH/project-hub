@@ -378,11 +378,13 @@ exports.createMoMoPayment = async ({ orderId, totalPrice }) => {
 
 exports.createPayOSPayment = async ({ orderId, totalPrice }) => {
     const PAYOS_API_URL = 'https://api-merchant.payos.vn/v2/payment-requests';
-    const PAYOS_API_KEY = 'b6585e6d-b4ad-4cdf-a6e9-3fbcab7b1293'; // Replace with your PayOS API key
-    const PAYOS_CLIENT_ID = '6feea606-7770-4745-bcc0-61d11ec77dff'; // Replace with your PayOS client ID
-    const PAYOS_CHECKSUM_KEY = '21cf69f90ea459a7c2fee82d41402465223fdb990c7c26764436f2f28c66658d'; // Replace with your PayOS checksum key
+    const PAYOS_API_KEY = process.env.PAYOS_API_KEY;
+    const PAYOS_CLIENT_ID = process.env.PAYOS_CLIENT_ID;
+    const PAYOS_CHECKSUM_KEY = process.env.PAYOS_CHECKSUM_KEY;
 
-    const orderCode = parseInt(`${orderId}-${Date.now()}`); // Unique order code
+    const paddedOrderId = orderId.toString().padStart(10, '0'); // e.g. 0000012345
+    const uniqueSuffix = Date.now().toString().slice(-6);       // e.g. 654321
+    const orderCode = parseInt(`${paddedOrderId}${uniqueSuffix}`); // e.g. 0000012345654321 
     const returnUrl = `https://d2f.io.vn/checkout/result/${orderId}`;
     const cancelUrl = `https://d2f.io.vn/checkout/result/${orderId}`;
     const description = `order is ready`;
