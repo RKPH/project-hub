@@ -1,4 +1,4 @@
-﻿const crypto = require('crypto'); // CommonJS syntax (adjust to 'import' if using ES modules)
+const crypto = require('crypto'); // CommonJS syntax (adjust to 'import' if using ES modules)
 const Order = require('../models/Order');
 const Cart = require("../models/cart");
 
@@ -66,10 +66,12 @@ exports.handlePayOSConfirmWebhook = async (req, res) => {
         }
 
         // Extract original orderId from orderCode (assuming orderCode is the full MongoDB _id)
-        const fullOrderCode = paymentData.orderCode.toString();
-        const orderId = fullOrderCode.substring(0, 10).replace(/^0+/, ''); // Remove leading zeros
-        console.log("✅ Extracted orderId:", orderId);
-        console.log(`Extracted originalOrderId: ${orderId}`);
+        const fullOrderCode = paymentData.orderCode.toString().padStart(16, '0'); // e.g., "0000000075654321"
+        const paddedOrderId = fullOrderCode.substring(0, 10); // e.g., "0000000075"
+        const orderId = paddedOrderId.slice(-4); // e.g., "0075"
+        console.log(`Extracted orderId: ${orderId}`); // Outputs: Extracted orderId: 0075
+        
+        
 
         const order = await Order.findOne({order_id: orderId}).populate('products.product').exec();
         if (!order) {
@@ -96,7 +98,7 @@ exports.handlePayOSConfirmWebhook = async (req, res) => {
                 date: formatDate(new Date()),
                 action: `Payment failed via PayOS: ${webhookData.desc || 'Unknown error'}`
             });
-            console.log(`Payment failed for order ${originalOrderId}: ${webhookData.desc}`);
+            console.log(`Payment failed for order ${orderId}: ${webhookData.desc}`);
         }
 
         await order.save();
